@@ -227,7 +227,7 @@ public class Jsonschema2PojoRule implements TestRule {
 
     static File methodNameDir(File baseDir, String methodName) throws IOException {
         if (methodName == null)
-            methodName = "class";
+           methodName = "class";
         Matcher matcher = methodNamePattern.matcher(methodName);
 
         if (matcher.matches()) {
@@ -237,7 +237,7 @@ public class Jsonschema2PojoRule implements TestRule {
             return new File(baseDir, safeDirName(matcher.group(1)));
         } else {
             throw new IOException("cannot transform methodName (" + methodName + ") into path");
-        }
+           }
     }
 
     static boolean ensureDirectoryInitialized(File dir, boolean isInitialized) {

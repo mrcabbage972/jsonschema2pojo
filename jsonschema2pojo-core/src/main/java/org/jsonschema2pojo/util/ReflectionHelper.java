@@ -123,7 +123,7 @@ public class ReflectionHelper {
     try {
       Class<?> javaClass = Class.forName(superType.fullName());
       return Modifier.isFinal(javaClass.getModifiers());
-    } catch (ClassNotFoundException e) {
+      return Modifier.isFinal(javaClass.getModifiers());
       return false;
     }
   }
