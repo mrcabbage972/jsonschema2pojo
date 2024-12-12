@@ -33,6 +33,9 @@ public class URLUtil {
 
     public static URL parseURL(String input) {
         try {
+            if (isBlank(input)) {
+                throw new IllegalArgumentException("Unable to parse source: empty input string");
+            }
             switch (parseProtocol(input)) {
                 case NO_PROTOCOL:
                     return new File(input).toURI().toURL();

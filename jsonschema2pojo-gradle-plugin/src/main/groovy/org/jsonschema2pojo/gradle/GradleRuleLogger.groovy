@@ -26,60 +26,60 @@ class GradleRuleLogger extends AbstractRuleLogger {
     }
 
     @Override
-    void doDebug(String msg) {
+    protected void doDebug(String msg) {
         logger.debug(msg)
     }
 
     @Override
-    void doError(String msg, Throwable e) {
+    protected void doError(String msg, Throwable e) {
         if(e != null) {
-            logger.error(msg, e)
+            logger.error(msg, Exception(msg, e))
         } else {
             logger.error(msg)
         }
     }
 
     @Override
-    void doInfo(String msg) {
+    protected void doInfo(String msg) {
         logger.info(msg)
     }
 
     @Override
-    void doTrace(String msg) {
+    protected void doTrace(String msg) {
         logger.trace(msg)
     }
 
     @Override
-    void doWarn(String msg, Throwable e) {
+    protected void doWarn(String msg, Throwable e) {
         if(e != null) {
-            logger.warn(msg, e)
+            logger.warn(msg, Exception(msg, e))
         } else {
             logger.warn(msg)
         }
     }
 
     @Override
-    boolean isDebugEnabled() {
+    protected boolean isDebugEnabled() {
         return logger.isDebugEnabled()
     }
 
     @Override
-    boolean isErrorEnabled() {
+    protected boolean isErrorEnabled() {
         return logger.isErrorEnabled()
     }
 
     @Override
-    boolean isInfoEnabled() {
+    protected boolean isInfoEnabled() {
         return logger.isInfoEnabled()
     }
 
     @Override
-    boolean isTraceEnabled() {
+    protected boolean isTraceEnabled() {
         return logger.isTraceEnabled()
     }
 
     @Override
-    boolean isWarnEnabled() {
+    protected boolean isWarnEnabled() {
         return logger.isWarnEnabled()
     }
 }

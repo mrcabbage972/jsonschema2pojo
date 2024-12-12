@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>jsonschema2pojo-cli</artifactId>
-
+ 12 |
     <name>jsonschema2pojo-cli</name>
 
     <build>

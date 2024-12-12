@@ -80,13 +80,12 @@ class GenerateJsonSchemaJavaTask extends DefaultTask {
     logger.info 'Using this configuration:\n{}', configuration
 
     Jsonschema2Pojo.generate(configuration, new GradleRuleLogger(logger))
-  }
+      configuration.source = project.files("${project.sourceSets.main.output.resourcesDir}/json")
 
-  void setTargetVersion(JsonSchemaExtension configuration) {
+  }
     if (!configuration.targetVersion) {
       def compileJavaTask = project.getTasksByName("compileJava", false).first()
       configuration.targetVersion = compileJavaTask.getProperties().get("sourceCompatibility")
       logger.info 'Using Gradle sourceCompatibility as targetVersion for jsonschema2pojo: ' + configuration.targetVersion
     }
-  }
 }

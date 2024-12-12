@@ -8,8 +8,7 @@
             </pluginExecutionFilter>
             <action>
                 <execute>
-                    <runOnIncremental>false</runOnIncremental>
-                    <runOnConfiguration>true</runOnConfiguration>
+<lifecycleMappingMetadata>\n
                 </execute>
             </action>
         </pluginExecution>

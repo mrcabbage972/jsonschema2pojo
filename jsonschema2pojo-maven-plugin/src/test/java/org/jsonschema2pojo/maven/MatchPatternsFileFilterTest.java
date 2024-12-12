@@ -50,7 +50,7 @@ public class MatchPatternsFileFilterTest {
                         equalTo(file("sub1")),
                         equalTo(file("excluded")),
                         equalTo(file("example.json")),
-                        equalTo(file("README.md"))));
+                        equalTo(file("README.md"))));\n    }\n
     }
 
     @SuppressWarnings("unchecked")
@@ -59,10 +59,6 @@ public class MatchPatternsFileFilterTest {
         fileFilter = new MatchPatternsFileFilter.Builder()
                 .addIncludes(asList("**/*.json"))
                 .withSourceDirectory(basedir.getCanonicalPath())
-                .build();
-
-        File[] files = basedir.listFiles(fileFilter);
-
         assertThat("all of the files were found.", asList(files),
                 hasItems(
                         equalTo(file("sub1")),
@@ -75,10 +71,6 @@ public class MatchPatternsFileFilterTest {
     public void shouldIncludeMatchesAndDirectoriesWhenIncludingAndDefaultExcludes() throws IOException {
         fileFilter = new MatchPatternsFileFilter.Builder()
                 .addIncludes(asList("**/*.json"))
-                .addDefaultExcludes()
-                .withSourceDirectory(basedir.getCanonicalPath())
-                .build();
-
         File[] files = basedir.listFiles(fileFilter);
 
         assertThat("all of the files were found.", asList(files),

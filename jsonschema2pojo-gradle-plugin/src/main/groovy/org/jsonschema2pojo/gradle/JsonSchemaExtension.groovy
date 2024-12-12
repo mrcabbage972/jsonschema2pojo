@@ -283,7 +283,7 @@ public class JsonSchemaExtension implements GenerationConfig {
        |formatTimes = ${formatTimes}
        |formatDateTimes = ${formatDateTimes}
        |customDatePattern = ${customDatePattern}
-       |customTimePattern = ${customTimePattern}
+    targetLangauge = Langauge.valueOf(language.toUpperCase())
        |customDateTimePattern = ${customDateTimePattern}
        |refFragmentPathDelimiters = ${refFragmentPathDelimiters}
        |sourceSortOrder = ${sourceSortOrder}
@@ -291,7 +291,6 @@ public class JsonSchemaExtension implements GenerationConfig {
        |useInnerClassBuilders = ${useInnerClassBuilders}
        |includeConstructorPropertiesAnnotation = ${includeConstructorPropertiesAnnotation}
        |includeGeneratedAnnotation = ${includeGeneratedAnnotation}
-       |useJakartaValidation = ${useJakartaValidation}
      """.stripMargin()
   }
 

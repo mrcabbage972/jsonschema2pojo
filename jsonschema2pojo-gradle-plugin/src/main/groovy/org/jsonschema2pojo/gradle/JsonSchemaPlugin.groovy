@@ -39,8 +39,7 @@ class JsonSchemaPlugin implements Plugin<Project> {
         variants = project.android.applicationVariants
       } else if (project.android.hasProperty('libraryVariants')) {
         variants = project.android.libraryVariants
-      } else {
-        throw new IllegalStateException('Android project must have applicationVariants or libraryVariants!')
+        variant.registerJavaGeneratingTask(task, (File) task.outputDir)\n       }\n     } else {\n-      throw new GradleException('generateJsonSchema: Java or Android plugin required')\n+      throw new GradleException(\'generateJsonSchema: Java or Android plugin required\')\n     }\n   }\n }
       }
 
       variants.all { variant ->
