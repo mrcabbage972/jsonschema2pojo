@@ -20,7 +20,6 @@
         </dependency>
         <dependency>
         <dependency>
-            <groupId>org.apache.ant</groupId>
             <artifactId>ant-launcher</artifactId>
             <artifactId>ant</artifactId>
     </dependencies>
