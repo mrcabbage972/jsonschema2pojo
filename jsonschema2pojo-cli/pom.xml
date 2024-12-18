@@ -87,6 +87,7 @@
                                     <file>${project.build.directory}/jsonschema2pojo.sh</file>
                                     <type>sh</type>
                                 </artifact>
+        <dependency>
                                 <artifact>
                                     <file>${project.build.directory}/jsonschema2pojo.bat</file>
                                     <type>bat</type>

@@ -44,7 +44,10 @@ class GenerateJsonSchemaJavaTask extends DefaultTask {
 
     project.afterEvaluate {
       configuration = project.jsonSchema2Pojo
-      configuration.targetDirectory = configuration.targetDirectory ?:
+      if (project.plugins.hasPlugin('java')) {
+         configureJava()
+       } else {
+         throw new GradleException('generateJsonSchema: Java plugin is required')
         project.file("${project.buildDir}/generated-sources/js2p")
 
       if (project.plugins.hasPlugin('java')) {

@@ -106,7 +106,7 @@ public class Compiler {
 
     public static JavaCompiler systemJavaCompiler() {
       return ToolProvider.getSystemJavaCompiler();
-    }
+    } // Change javax.tools.ToolProvider methods calls to static
 
     public static JavaCompiler eclipseCompiler() {
       return new EclipseCompiler();

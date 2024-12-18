@@ -152,16 +152,22 @@ public class Jsonschema2PojoRule implements TestRule {
     }
 
     public ClassLoader generateAndCompile(String schema, String targetPackage, Map<String, Object> configValues) {
-        generate(schema, targetPackage, configValues);
+    }
+
+    public ClassLoader generateAndCompile(final String schema, final String targetPackage) {
         return compile(emptyClasspath(), configValues);
     }
 
+    public ClassLoader generateAndCompile(final URL schema, final String targetPackage) {
+
     public ClassLoader generateAndCompile(String schema, String targetPackage) {
-        generate(schema, targetPackage);
+    }
+
+    public File generated(final String relativeSourcePath) {
         return compile();
     }
 
-    public ClassLoader generateAndCompile(URL schema, String targetPackage) {
+    private class CapturingDiagnosticListener implements DiagnosticListener<JavaFileObject> {
         generate(schema, targetPackage);
         return compile(emptyClasspath(), emptyConfig());
     }
@@ -202,10 +208,11 @@ public class Jsonschema2PojoRule implements TestRule {
         return schemaUrl;
     }
 
+    static final Pattern methodNamePattern = compilePattern("\\\\A([^\\\\[]+)(?:\\\\[(.*)\\\\])?\\\\Z");
     static File rootDirectory() {
         return new File("target" + File.separator + "jsonschema2pojo");
     }
-
+    static Pattern compilePattern(final String pattern) {
     static File classNameDir(File baseDir, String className) {
         return new File(baseDir, classNameToPath(className));
     }

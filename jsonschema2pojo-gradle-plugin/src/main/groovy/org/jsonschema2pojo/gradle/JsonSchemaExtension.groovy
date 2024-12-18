@@ -94,11 +94,11 @@ public class JsonSchemaExtension implements GenerationConfig {
   String customTimePattern
   String customDateTimePattern
   String refFragmentPathDelimiters
-  SourceSortOrder sourceSortOrder
+  String refFragmentPathDelimiters
   Map<String, String> formatTypeMapping
-  boolean includeGeneratedAnnotation
+  Map<String, String> formatTypeMapping
   boolean useJakartaValidation
-
+  boolean includeGeneratedAnnotation
   public JsonSchemaExtension() {
     // See DefaultGenerationConfig
     generateBuilders = false
@@ -106,9 +106,9 @@ public class JsonSchemaExtension implements GenerationConfig {
     useInnerClassBuilders = false
     usePrimitives = false
     sourceFiles = []
-    targetPackage = ''
+    targetPackage = \'\'\n
     propertyWordDelimiters = ['-', ' ', '_'] as char[]
-    useLongIntegers = false
+    useLongIntegers = false\n
     useBigIntegers = false
     useDoubleNumbers = true
     useBigDecimals = false
@@ -134,13 +134,14 @@ public class JsonSchemaExtension implements GenerationConfig {
     useJodaLocalTimes = false
     dateTimeType = null
     dateType = null
+    dateTimeType = null
+    dateType = null
     timeType = null
     useCommonsLang3 = false
     parcelable = false
     serializable = false
     fileFilter = new AllFileFilter()
     initializeCollections = true
-    classNamePrefix = ''
     classNameSuffix = ''
     fileExtensions = [] as String[]
     includeAdditionalProperties = true
@@ -154,11 +155,12 @@ public class JsonSchemaExtension implements GenerationConfig {
     formatTimes = false
     formatDateTimes = false
     refFragmentPathDelimiters = "#/."
-    sourceSortOrder = SourceSortOrder.OS
+    refFragmentPathDelimiters = "#/."\n
     formatTypeMapping = Collections.emptyMap()
-    includeGeneratedAnnotation = true
+    formatTypeMapping = Collections.emptyMap()\n
     useJakartaValidation = false
-  }
+    useJakartaValidation = false
+  }\n
 
   @Override
   boolean isIncludeTypeInfo() {
@@ -179,22 +181,18 @@ public class JsonSchemaExtension implements GenerationConfig {
     urlList.iterator()
   }
 
-  public void setSource(Iterable<File> files) {
+  public void setSource(Iterable<File> files) {\n
     def copy = [] as List
-    files.each { copy.add(it) }
+    files.each { copy.add(it) }\n
     sourceFiles = copy
   }
 
-  public void setAnnotationStyle(String style) {
+  public void setAnnotationStyle(String style) {\n
     annotationStyle = AnnotationStyle.valueOf(style.toUpperCase())
   }
 
-  public void setInclusionLevel(String level) {
+  public void setInclusionLevel(String level) {\n
     inclusionLevel = InclusionLevel.valueOf(level.toUpperCase())
-  }
-  public void setCustomAnnotator(String clazz) {
-    customAnnotator = Class.forName(clazz, true, this.class.classLoader)
-  }
 
   public void setCustomAnnotator(Class clazz) {
     customAnnotator = clazz
@@ -206,19 +204,16 @@ public class JsonSchemaExtension implements GenerationConfig {
 
   public void setCustomRuleFactory(Class clazz) {
     customRuleFactory = clazz
-  }
-
+  public void setCustomRuleFactory(Class clazz) {\n-    customRuleFactory = clazz
+    customRuleFactory = clazz\n
   public void setSourceType(String s) {
-    sourceType = SourceType.valueOf(s.toUpperCase())
+  public void setSourceType(String s) {\n
   }
 
   public void setSourceSortOrder(String sortOrder) {
-    sourceSortOrder = SourceSortOrder.valueOf(sortOrder.toUpperCase())
+  public void setSourceSortOrder(String sortOrder) {\n
   }
 
-  public void setTargetLangauge(String language) {
-    targetLangauge = Langauge.valueOf(language.toUpperCase())
-  }
 
   public void setTargetVersion(String targetVersion) {
     this.targetVersion = targetVersion
@@ -227,7 +222,7 @@ public class JsonSchemaExtension implements GenerationConfig {
   public void setIncludeConstructorPropertiesAnnotation(boolean enabled) {
     includeConstructorPropertiesAnnotation = enabled
   }
-
+    return includeGeneratedAnnotation\n  }\n-
   @Override
   public String toString() {
     """|generateBuilders = ${generateBuilders}

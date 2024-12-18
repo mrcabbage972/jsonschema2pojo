@@ -178,10 +178,10 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     private boolean useLongIntegers = false;
 
     /**
-     * Whether to use the java type {@link java.math.BigInteger} instead of
-     * <code>int</code> (or {@link java.lang.Integer}) when representing the
+     * Whether to use the java type `BigInteger` instead of
+     * `int` (or `Integer`) when representing the
      * JSON Schema type 'integer'. Note that this configuration overrides
-     * {@link #isUseLongIntegers()}.
+     * `isUseLongIntegers()`.
      *
      * @since 0.4.25
      */
@@ -190,8 +190,8 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
 
     /**
      * Whether to use the java type <code>double</code> (or <code>Double</code>)
-     * instead of <code>float</code> (or <code>Float</code>) when representing
-     * the JSON Schema type 'number'.
+     * instead of `float` (or `Float`) when representing the
+     * JSON Schema type 'number'.
      *
      * @since 0.4.0
      */
@@ -200,9 +200,9 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
 
     /**
      * Whether to use the java type {@link java.math.BigDecimal} instead of
-     * <code>float</code> (or {@link java.lang.Float}) when representing the
+     * `float` (or `Float`) when representing the
      * JSON Schema type 'number'. Note that this configuration overrides
-     * {@link #isUseDoubleNumbers()}.
+     * `isUseDoubleNumbers()`.
      *
      * @since 0.4.22
      */
@@ -212,14 +212,16 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     /**
      * Whether to include <code>hashCode</code> and <code>equals</code> methods
      * in generated Java types.
-     *
+     * in generated Java types.     *
      * @since 0.3.1
      */
     @Parameter(property = "jsonschema2pojo.includeHashcodeAndEquals", defaultValue = "true")
+    @Parameter(property = "jsonschema2pojo.includeHashcodeAndEquals", defaultValue = "true")
     private boolean includeHashcodeAndEquals = true;
 
-    /**
-     * Whether to include a <code>toString</code> method in generated Java
+     * Whether to include a `toString` method in generated Java types.     * @since 0.3.1
+     */
+    @Parameter(property = "jsonschema2pojo.includeToString", defaultValue = "true")
      * types.
      *
      * @since 0.3.1
@@ -727,7 +729,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
      * The sort order to be applied when recursively processing the source
      * files. By default the OS can influence the processing order.   Supported values:
      * <ul>
-     * <li><code>OS</code> (Let the OS influence the order the source files are processed.)</li>
      * <li><code>FILES_FIRST</code> (Case sensitive sort, visit the files first.  The source files are processed in a breadth
      * first sort order.)</li>
      * <li><code>SUBDIRS_FIRST</code> (Case sensitive sort, visit the sub-directories before the files.  The source files are
@@ -776,7 +777,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
      * If the {@link #isIncludeJsr303Annotations()} returns {@code false}, then this configuration option will not affect anything.
      */
     @Parameter(property = "jsonschema2pojo.useJakartaValidation", defaultValue = "false")
-    private boolean useJakartaValidation = false;
 
     /**
      * Executes the plugin, to read the given source and behavioural properties
@@ -797,21 +797,21 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
             throw new MojoExecutionException("Not a valid annotation style: " + annotationStyle);
         }
 
+
         try {
-            new AnnotatorFactory(this).getAnnotator(getCustomAnnotator());
-        } catch (IllegalArgumentException e) {
+            getAnnotationStyle();
             throw new MojoExecutionException(e.getMessage(), e);
         }
-
+        }
         if (skip) {
             return;
         }
 
-        // verify source directories
         if (sourceDirectory != null) {
             sourceDirectory = FilenameUtils.normalize(sourceDirectory);
+            sourceDirectory = FilenameUtils.normalize(sourceDirectory);
             // verify sourceDirectory
-            try {
+                URLUtil.parseURL(sourceDirectory);
                 URLUtil.parseURL(sourceDirectory);
             } catch (IllegalArgumentException e) {
                 throw new MojoExecutionException(e.getMessage(), e);
@@ -1143,7 +1143,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
             getLog().debug("Using maven.compiler.release to set targetVersion for generated sources (" + this.targetVersion + ")");
             return;
         }
-
         for (Plugin p : (List<Plugin>) project.getBuildPlugins()) {
             if (p.getKey().equals("org.apache.maven.plugins:maven-compiler-plugin") && p.getConfiguration() instanceof Xpp3Dom) {
                 final Xpp3Dom compilerSourceConfig = ((Xpp3Dom) p.getConfiguration()).getChild("source");
@@ -1161,7 +1160,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
                 }
             }
         }
-
         this.targetVersion = JavaVersion.parse(System.getProperty("java.version"));
         getLog().debug("Using JVM to set targetVersion for generated sources (" + this.targetVersion + ")");
     }

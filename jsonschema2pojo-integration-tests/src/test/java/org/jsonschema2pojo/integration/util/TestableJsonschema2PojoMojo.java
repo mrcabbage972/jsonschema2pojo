@@ -44,7 +44,6 @@ public class TestableJsonschema2PojoMojo extends Jsonschema2PojoMojo {
 
     public TestableJsonschema2PojoMojo configure(Map<String, Object> configValues) {
         
-        // this could be done with reflection, if the plugin used real annotations.
         setPrivateField("sourcePaths", new String[]{});
 
         for (Entry<String, Object> value : configValues.entrySet()) {
