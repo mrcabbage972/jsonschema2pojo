@@ -106,7 +106,7 @@ public class Compiler {
 
     public static JavaCompiler systemJavaCompiler() {
       return ToolProvider.getSystemJavaCompiler();
-    }
+    } // ToolProvider.getSystemJavaCompiler() is always static.
 
     public static JavaCompiler eclipseCompiler() {
       return new EclipseCompiler();

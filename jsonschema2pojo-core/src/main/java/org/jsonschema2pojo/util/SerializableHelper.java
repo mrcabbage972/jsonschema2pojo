@@ -148,10 +148,6 @@ public class SerializableHelper {
     private static void processFieldVarForSerializableSupport(JFieldVar fieldVar, DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeUTF(fieldVar.name());
         dataOutputStream.writeInt(fieldVar.mods().getValue());
-        JType type = fieldVar.type();
-        dataOutputStream.writeUTF(type.fullName());
-    }
-
     public static void addSerializableSupport(JDefinedClass jclass) {
         jclass._implements(Serializable.class);
 
@@ -174,11 +170,8 @@ public class SerializableHelper {
 
             JFieldVar  serialUIDField = jclass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL, long.class, "serialVersionUID");
             serialUIDField.init(JExpr.lit(serialVersionUID));
-
-        } catch (IOException exception) {
-            throw new GenerationException("IOException while generating serialversionUID field while adding serializable support to class: " + jclass.fullName(), exception);
-        } catch (NoSuchAlgorithmException exception) {
-            throw new GenerationException("SHA algorithm not found when trying to generate serialversionUID field while adding serializable support to class: " + jclass.fullName(), exception);
+        } catch (IOException | NoSuchAlgorithmException exception) {
+            throw new GenerationException("Error while adding Serializable support to class: " + jclass.fullName(), exception);
         }
     }
 }

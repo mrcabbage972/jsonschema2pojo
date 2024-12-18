@@ -37,12 +37,10 @@ public class JsonSchemaExtension implements GenerationConfig {
   File targetDirectory
   String targetPackage
   AnnotationStyle annotationStyle
-  boolean useTitleAsClassname
-  InclusionLevel inclusionLevel
-  String classNamePrefix
-  String classNameSuffix
-  String[] fileExtensions
-  Class<? extends Annotator> customAnnotator
+  AnnotationStyle annotationStyle\n  boolean useTitleAsClassname\n  InclusionLevel inclusionLevel\n  String classNamePrefix\n  String classNameSuffix\n  String[] fileExtensions\n  Class<? extends Annotator> customAnnotator\n  Class<? extends RuleFactory> customRuleFactory
+  boolean generateBuilders
+  boolean includeJsonTypeInfoAnnotation
+  boolean useInnerClassBuilders
   Class<? extends RuleFactory> customRuleFactory
   boolean generateBuilders
   boolean includeJsonTypeInfoAnnotation
@@ -54,29 +52,21 @@ public class JsonSchemaExtension implements GenerationConfig {
   boolean includeDynamicAccessors
   boolean includeDynamicGetters
   boolean includeDynamicSetters
-  boolean includeDynamicBuilders
-  boolean includeConstructors
-  boolean constructorsRequiredPropertiesOnly
+  boolean includeDynamicBuilders\n  boolean includeConstructors\n  boolean constructorsRequiredPropertiesOnly
   boolean includeRequiredPropertiesConstructor;
   boolean includeAllPropertiesConstructor;
   boolean includeCopyConstructor;
   boolean includeHashcodeAndEquals
-  boolean includeJsr303Annotations
-  boolean includeJsr305Annotations
   boolean useOptionalForGetters
-  boolean includeToString
-  String[] toStringExcludes
-  boolean initializeCollections
-  String outputEncoding
-  boolean parcelable
-  boolean serializable
-  char[] propertyWordDelimiters
-  boolean removeOldOutput
   SourceType sourceType
   String targetVersion
-  boolean useCommonsLang3
+  Iterable<File> sourceFiles\n  File targetDirectory
+  String targetPackage
   boolean useDoubleNumbers
   boolean useBigDecimals
+  boolean useJodaDates
+  boolean useJodaLocalDates
+  boolean useJodaLocalTimes
   boolean useJodaDates
   boolean useJodaLocalDates
   boolean useJodaLocalTimes
@@ -84,8 +74,7 @@ public class JsonSchemaExtension implements GenerationConfig {
   String dateType
   String timeType
   boolean useLongIntegers
-  boolean useBigIntegers
-  boolean usePrimitives
+  String timeType\n  boolean usePrimitives
   FileFilter fileFilter
   boolean formatDates
   boolean formatTimes
@@ -94,6 +83,7 @@ public class JsonSchemaExtension implements GenerationConfig {
   String customTimePattern
   String customDateTimePattern
   String refFragmentPathDelimiters
+  boolean usePrimitives
   SourceSortOrder sourceSortOrder
   Map<String, String> formatTypeMapping
   boolean includeGeneratedAnnotation
@@ -116,6 +106,9 @@ public class JsonSchemaExtension implements GenerationConfig {
     includeConstructors = false
     constructorsRequiredPropertiesOnly = false
     includeRequiredPropertiesConstructor = false
+    includeConstructors = false
+    constructorsRequiredPropertiesOnly = false
+    includeRequiredPropertiesConstructor = false
     includeAllPropertiesConstructor = true
     includeToString = true
     toStringExcludes = [] as String[]
@@ -128,11 +121,12 @@ public class JsonSchemaExtension implements GenerationConfig {
     includeJsr305Annotations = false
     useOptionalForGetters = false
     sourceType = SourceType.JSONSCHEMA
-    outputEncoding = 'UTF-8'
+    outputEncoding = \'UTF-8\'
     useJodaDates = false
     useJodaLocalDates = false
     useJodaLocalTimes = false
     dateTimeType = null
+    includeToString = true
     dateType = null
     timeType = null
     useCommonsLang3 = false
@@ -140,28 +134,28 @@ public class JsonSchemaExtension implements GenerationConfig {
     serializable = false
     fileFilter = new AllFileFilter()
     initializeCollections = true
-    classNamePrefix = ''
-    classNameSuffix = ''
+    classNamePrefix = \'\'\n
+    classNameSuffix = \'\'\n
     fileExtensions = [] as String[]
-    includeAdditionalProperties = true
-    includeGetters = true
-    includeSetters = true
-    includeDynamicAccessors = false
+    removeOldOutput = false
+    includeConstructors = false
+    constructorsRequiredPropertiesOnly = false
+    includeRequiredPropertiesConstructor = false
     includeDynamicGetters = false
     includeDynamicSetters = false
     includeDynamicBuilders = false
     formatDates = false
     formatTimes = false
     formatDateTimes = false
-    refFragmentPathDelimiters = "#/."
-    sourceSortOrder = SourceSortOrder.OS
+    formatDateTimes = false
+    customDatePattern = null
+    customTimePattern = null
+    customDateTimePattern = null
+    refFragmentPathDelimiters = "#/."\n
+  }
     formatTypeMapping = Collections.emptyMap()
     includeGeneratedAnnotation = true
     useJakartaValidation = false
-  }
-
-  @Override
-  boolean isIncludeTypeInfo() {
     return includeJsonTypeInfoAnnotation
   }
 
@@ -273,35 +267,19 @@ public class JsonSchemaExtension implements GenerationConfig {
        |classNameSuffix = ${classNameSuffix}
        |fileExtensions = ${Arrays.toString(fileExtensions)}
        |includeGetters = ${includeGetters}
+  public void setTargetLangauge(String language) {\n+    targetLangauge = Langauge.valueOf(language.toUpperCase())
        |includeSetters = ${includeSetters}
        |targetVersion = ${targetVersion}
-       |includeDynamicAccessors = ${includeDynamicAccessors}
+  public void setIncludeConstructorPropertiesAnnotation(boolean enabled) {\n    includeConstructorPropertiesAnnotation = enabled
        |includeDynamicGetters = ${includeDynamicGetters}
        |includeDynamicSetters = ${includeDynamicSetters}
        |includeDynamicBuilders = ${includeDynamicBuilders}
-       |formatDates = ${formatDates}
-       |formatTimes = ${formatTimes}
-       |formatDateTimes = ${formatDateTimes}
-       |customDatePattern = ${customDatePattern}
-       |customTimePattern = ${customTimePattern}
-       |customDateTimePattern = ${customDateTimePattern}
+        |formatDateTimes = ${formatDateTimes}\n       |customDatePattern = ${customDatePattern}\n       |customTimePattern = ${customTimePattern}\n       |customDateTimePattern = ${customDateTimePattern}\n       |refFragmentPathDelimiters = ${refFragmentPathDelimiters}\n       |sourceSortOrder = ${sourceSortOrder}\n       |formatTypeMapping = ${formatTypeMapping}\n       |useInnerClassBuilders = ${useInnerClassBuilders}\n       |includeConstructorPropertiesAnnotation = ${includeConstructorPropertiesAnnotation}\n       |includeGeneratedAnnotation = ${includeGeneratedAnnotation}\n       |useJakartaValidation = ${useJakartaValidation}\n        |propertyWordDelimiters = ${propertyWordDelimiters}
        |refFragmentPathDelimiters = ${refFragmentPathDelimiters}
        |sourceSortOrder = ${sourceSortOrder}
        |formatTypeMapping = ${formatTypeMapping}
        |useInnerClassBuilders = ${useInnerClassBuilders}
        |includeConstructorPropertiesAnnotation = ${includeConstructorPropertiesAnnotation}
-       |includeGeneratedAnnotation = ${includeGeneratedAnnotation}
+    return useJakartaValidation
        |useJakartaValidation = ${useJakartaValidation}
      """.stripMargin()
-  }
-
-  public boolean isFormatDateTimes() {
-    return formatDateTimes
-  }
-
-  @Override
-  boolean isIncludeGeneratedAnnotation() {
-    return includeGeneratedAnnotation
-  }
-
-}
