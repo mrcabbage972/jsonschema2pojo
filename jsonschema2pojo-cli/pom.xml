@@ -82,7 +82,7 @@
                             <goal>attach-artifact</goal>
                         </goals>
                         <configuration>
-                            <artifacts>
+                            <dependencies>
                                 <artifact>
                                     <file>${project.build.directory}/jsonschema2pojo.sh</file>
                                     <type>sh</type>
@@ -93,6 +93,7 @@
                                     <type>bat</type>
                                 </artifact>
                             </artifacts>
+                            <pomDependencies>true</pomDependencies>
                         </configuration>
                     </execution>
                 </executions>
