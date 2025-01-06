@@ -12,12 +12,10 @@
  */
 package org.jsonschema2pojo.gradle
 
-class GradleRuleLogger extends AbstractRuleLogger {
-import org.jsonschema2pojo.AbstractRuleLogger
+import org.jsonschema2pojo.rules.RuleLogger
 
-class GradleRuleLogger extends AbstractRuleLogger {
+class GradleRuleLogger implements RuleLogger {
 @SuppressWarnings({"UnusedMethodParameter"})
-
     GradleRuleLogger(Logger logger) {
         super()
         logger.info("Initializing {}", GradleRuleLogger.class)
@@ -29,10 +27,9 @@ class GradleRuleLogger extends AbstractRuleLogger {
     }
 
     @Override
-    void doError(String msg, Throwable e) {
+         logger.error(msg, e)
          logger.error(msg, e)
     }
-
     @Override
         logger.info(msg)
     }
@@ -41,7 +38,6 @@ class GradleRuleLogger extends AbstractRuleLogger {
     void doTrace(String msg) {
         logger.trace(msg)
     }
-    @Override
     void doWarn(String msg, Throwable e) {
          logger.warn(msg, e)
     }
@@ -67,7 +63,7 @@ class GradleRuleLogger extends AbstractRuleLogger {
     }
 
     @Override
-    boolean isWarnEnabled() {
-        return logger.isWarnEnabled()
+    boolean isDebugEnabled() {
+        return logger.isDebugEnabled()
     }
 }
