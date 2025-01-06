@@ -16,6 +16,7 @@ import org.gradle.api.logging.Logger
 import org.jsonschema2pojo.AbstractRuleLogger
 
 class GradleRuleLogger extends AbstractRuleLogger {
+@SuppressWarnings({"UnusedMethodParameter"})
 
     GradleRuleLogger(Logger logger) {
         super()
