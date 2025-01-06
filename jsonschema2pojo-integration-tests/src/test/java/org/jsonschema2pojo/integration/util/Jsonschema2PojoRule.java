@@ -227,7 +227,7 @@ public class Jsonschema2PojoRule implements TestRule {
 
     static File methodNameDir(File baseDir, String methodName) throws IOException {
         if (methodName == null)
-            methodName = "class";
+            methodName = "class"; // if no method name, default to "class" (representing the class itself)
         Matcher matcher = methodNamePattern.matcher(methodName);
 
         if (matcher.matches()) {

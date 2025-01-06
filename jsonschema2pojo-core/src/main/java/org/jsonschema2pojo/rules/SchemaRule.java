@@ -43,37 +43,23 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
         this.ruleFactory = ruleFactory;
     }
 
-    /**
-     * Applies this schema rule to take the required code generation steps.
-     * <p>
-     * At the root of a schema document this rule should be applied (schema
-     * documents contain a schema), but also in many places within the document.
-     * Each property of type "object" is itself defined by a schema, the items
-     * attribute of an array is a schema, the additionalProperties attribute of
-     * a schema is also a schema.
-     * <p>
-     * Where the schema value is a $ref, the ref URI is assumed to be applicable
-     * as a URL (from which content will be read). Where the ref URI has been
-     * encountered before, the root Java type created by that schema will be
-     * re-used (generation steps won't be repeated).
-     *
-     * @param schema
-     *            the schema within which this schema rule is being applied
-     */
     @Override
     public JType apply(String nodeName, JsonNode schemaNode, JsonNode parent, JClassContainer generatableType, Schema schema) {
+      return apply(nodeName, schemaNode, parent, generatableType, schema, ruleFactory.getGenerationConfig().getRefFragmentPathDelimiters());
+        if (schemaNode.has("$ref")) {
+            final String nameFromRef = nameFromRef(schemaNode.get("$ref").asText());
 
         if (schemaNode.has("$ref")) {
             final String nameFromRef = nameFromRef(schemaNode.get("$ref").asText());
 
-            schema = ruleFactory.getSchemaStore().create(schema, schemaNode.get("$ref").asText(), ruleFactory.getGenerationConfig().getRefFragmentPathDelimiters());
+            schema = ruleFactory.getSchemaStore().create(schema, schemaNode.get("$ref").asText(), refFragmentPathDelimiters);
             schemaNode = schema.getContent();
-
+            }
             if (schema.isGenerated()) {
                 return schema.getJavaType();
             }
 
-            return apply(nameFromRef != null ? nameFromRef : nodeName, schemaNode, parent, generatableType, schema);
+            return apply(nameFromRef != null ? nameFromRef : nodeName, schemaNode, parent, generatableType, schema, refFragmentPathDelimiters);
         }
 
         JType javaType;
@@ -89,13 +75,11 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
 
     private String nameFromRef(String ref) {
 
-        if ("#".equals(ref)) {
-            return null;
-        }
-
+    private String nameFromRef(String ref) {
+      if ("#".equals(ref)) {
+        return null;
+      }
         String nameFromRef;
-        if (!contains(ref, "#")) {
-            nameFromRef = Jsonschema2Pojo.getNodeName(ref, ruleFactory.getGenerationConfig());
         } else {
             String[] nameParts = split(ref, "/\\#");
             nameFromRef = nameParts[nameParts.length - 1];
@@ -106,5 +90,12 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
         } catch (UnsupportedEncodingException e) {
             throw new GenerationException("Failed to decode ref: " + ref, e);
         }
+    }
+
+     if (!contains(ref, "#")) {
+        nameFromRef = Jsonschema2Pojo.getNodeName(ref, ruleFactory.getGenerationConfig());
+    } else {
+        String[] nameParts = split(ref, "/\\#");
+        nameFromRef = nameParts[nameParts.length - 1];
     }
 }
