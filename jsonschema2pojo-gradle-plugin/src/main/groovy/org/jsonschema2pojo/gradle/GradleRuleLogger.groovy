@@ -17,13 +17,10 @@ import org.jsonschema2pojo.AbstractRuleLogger
 
 class GradleRuleLogger extends AbstractRuleLogger {
 
-    Logger Logger
-
     GradleRuleLogger(Logger logger) {
         super()
         logger.info("Initializing {}", GradleRuleLogger.class)
         this.logger = logger
-    }
 
     @Override
     void doDebug(String msg) {
@@ -32,15 +29,10 @@ class GradleRuleLogger extends AbstractRuleLogger {
 
     @Override
     void doError(String msg, Throwable e) {
-        if(e != null) {
-            logger.error(msg, e)
-        } else {
-            logger.error(msg)
-        }
+         logger.error(msg, e)
     }
 
     @Override
-    void doInfo(String msg) {
         logger.info(msg)
     }
 
@@ -48,14 +40,9 @@ class GradleRuleLogger extends AbstractRuleLogger {
     void doTrace(String msg) {
         logger.trace(msg)
     }
-
     @Override
     void doWarn(String msg, Throwable e) {
-        if(e != null) {
-            logger.warn(msg, e)
-        } else {
-            logger.warn(msg)
-        }
+         logger.warn(msg, e)
     }
 
     @Override

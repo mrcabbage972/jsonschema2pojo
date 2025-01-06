@@ -29,7 +29,7 @@ class GradleBuildIT {
 
   void build(String projectDir) {
     GradleConnector connector = GradleConnector.newConnector()
-    connector.useGradleVersion("5.6")
+    connector.useGradleVersion("5.6.4")
     connector.forProjectDirectory(new File(projectDir))
     ProjectConnection connection = connector.connect()
     try {

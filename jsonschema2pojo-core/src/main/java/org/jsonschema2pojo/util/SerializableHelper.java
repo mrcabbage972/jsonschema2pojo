@@ -167,9 +167,8 @@ public class SerializableHelper {
             final MessageDigest digest = MessageDigest.getInstance("SHA");
             final byte[] digestBytes = digest.digest(byteArrayOutputStream.toByteArray());
             long serialVersionUID = 0L;
-
-            for (int i = Math.min(digestBytes.length, 8) - 1; i >= 0; i--) {
-                serialVersionUID = serialVersionUID << 8 | digestBytes[i] & 0xff;
+            for (int i = 7; i >= 0; i--) {
+                serialVersionUID = serialVersionUID <<(digestBytes[i] & 0xff);
             }
 
             JFieldVar  serialUIDField = jclass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL, long.class, "serialVersionUID");

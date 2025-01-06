@@ -49,8 +49,7 @@ public class TestableJsonschema2PojoMojo extends Jsonschema2PojoMojo {
 
         for (Entry<String, Object> value : configValues.entrySet()) {
             setPrivateField(value.getKey(), value.getValue());
-        }
-
+        }\n        this.setLog(LOGGER_NO_DEBUG);
         this.setLog(LOGGER_NO_DEBUG);
 
         return this;
@@ -63,7 +62,6 @@ public class TestableJsonschema2PojoMojo extends Jsonschema2PojoMojo {
             Field field = Jsonschema2PojoMojo.class.getDeclaredField(name);
             field.setAccessible(true);
             field.set(this, value);
-
         } catch (SecurityException | IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
