@@ -12,7 +12,7 @@
  */
 package org.jsonschema2pojo.gradle
 
-import org.gradle.api.logging.Logger
+class GradleRuleLogger extends AbstractRuleLogger {
 import org.jsonschema2pojo.AbstractRuleLogger
 
 class GradleRuleLogger extends AbstractRuleLogger {
