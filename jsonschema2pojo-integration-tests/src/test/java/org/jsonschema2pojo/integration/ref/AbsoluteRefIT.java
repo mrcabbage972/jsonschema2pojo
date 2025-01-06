@@ -58,9 +58,9 @@ public class AbsoluteRefIT {
 
         try {
             FileOutputStream outputStream = new FileOutputStream(absoluteRefSchemaFile);
-            try {
+            try
                 IOUtils.write(absoluteRefSchema, outputStream);
-            } finally {
+            finally
                 IOUtils.closeQuietly(outputStream);
             }
         } finally {

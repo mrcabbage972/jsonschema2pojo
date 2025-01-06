@@ -84,11 +84,11 @@ public class ContentResolver {
 
     private JsonNode resolveFromClasspath(URI uri) {
 
-        String path = removeStart(removeStart(uri.toString(), uri.getScheme() + ":"), "/");
-        InputStream contentAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+        String path = removeStart(removeStart(uri.toString(), uri.getScheme() + ":"), "/").replace("#/", "/");
+        InputStream contentAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path.replace("#/", "/"));
 
         if (contentAsStream == null) {
-            throw new IllegalArgumentException("Couldn't read content from the classpath, file not found: " + uri);
+            throw new IllegalArgumentException("Couldn't read content from the classpath, file not found: " + path);
         }
 
         try {

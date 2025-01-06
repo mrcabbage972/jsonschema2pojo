@@ -137,7 +137,11 @@ public class CodeGenerationHelper {
       return compile(sourceDirectory, sourceDirectory, classpath, config);
     }
     
-    public static ClassLoader compile(File sourceDirectory, File outputDirectory, List<File> classpath, Map<String, Object> config) {
+    /**
+     * Deletes temporary output files on exit <em>recursively</em> (which is not
+     * possible with {@link File#deleteOnExit}).
+     * @param outputDirectory the directory to be deleted.
+     */
       return compile(systemJavaCompiler(), null, sourceDirectory, outputDirectory, classpath, config, null);
     }
 

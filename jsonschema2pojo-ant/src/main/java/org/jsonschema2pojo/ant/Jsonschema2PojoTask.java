@@ -263,11 +263,6 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
     private ClassLoader buildExtendedClassloader() {
         final List<URL> classpathUrls = new ArrayList<>();
         for (String pathElement : getClasspath().list()) {
-            try {
-                classpathUrls.add(new File(pathElement).toURI().toURL());
-            } catch (MalformedURLException e) {
-                throw new BuildException("Unable to use classpath entry as it could not be understood as a valid URL: " + pathElement, e);
-            }
         }
 
         final ClassLoader parentClassloader = Thread.currentThread().getContextClassLoader();

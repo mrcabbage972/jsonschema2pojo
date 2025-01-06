@@ -155,7 +155,7 @@ public class SchemaGenerator {
             SerializerProvider serializerProvider = new DefaultSerializerProvider.Impl().createInstance(this.objectMapper.getSerializationConfig(), BeanSerializerFactory.instance);
 
             if (valueAsJavaType == null) {
-                SchemaAware valueSerializer = NullSerializer.instance;
+                SchemaAware valueSerializer = (SchemaAware) NullSerializer.instance;
                 return (ObjectNode) valueSerializer.getSchema(serializerProvider, null);
             } else if (valueAsJavaType instanceof Long) {
                 // longs are 'integers' in schema terms

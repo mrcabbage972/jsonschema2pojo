@@ -124,7 +124,6 @@ public class Jsonschema2PojoRule implements TestRule {
     public File generate(URL schema, String targetPackage) {
         return generate(schema, targetPackage, emptyConfig());
     }
-
     public File generate(String schema, String targetPackage, Map<String, Object> configValues) {
         return generate(schemaUrl(schema), targetPackage, configValues);
     }
@@ -149,15 +148,15 @@ public class Jsonschema2PojoRule implements TestRule {
     public ClassLoader compile(JavaCompiler compiler, Writer out, List<File> classpath, Map<String, Object> config) {
         DiagnosticListener<JavaFileObject> diagnosticListener = captureDiagnostics ? new CapturingDiagnosticListener() : null;
         return CodeGenerationHelper.compile(compiler, out, getGenerateDir(), getCompileDir(), classpath, config, diagnosticListener);
+        return CodeGenerationHelper.compile(compiler, out, getGenerateDir(), getCompileDir(), classpath, config, diagnosticListener);
     }
 
     public ClassLoader generateAndCompile(String schema, String targetPackage, Map<String, Object> configValues) {
-        generate(schema, targetPackage, configValues);
+        return compile(emptyClasspath(), configValues);
         return compile(emptyClasspath(), configValues);
     }
 
-    public ClassLoader generateAndCompile(String schema, String targetPackage) {
-        generate(schema, targetPackage);
+    public ClassLoader generateAndCompile(URL schema, String targetPackage) {
         return compile();
     }
 
@@ -170,7 +169,6 @@ public class Jsonschema2PojoRule implements TestRule {
         generate(schema, targetPackage, configValues);
         return compile(emptyClasspath(), configValues);
     }
-
     public File generated(String relativeSourcePath) {
         return new File(generateDir, relativeSourcePath);
     }
@@ -213,21 +211,21 @@ public class Jsonschema2PojoRule implements TestRule {
     static final Pattern methodNamePattern = compilePattern("\\A([^\\[]+)(?:\\[(.*)\\])?\\Z");
 
     /**
-     * Returns the compiled pattern, or null if the pattern could not compile.
-     */
     static Pattern compilePattern(String pattern) {
         try {
             return Pattern.compile(pattern);
         } catch (Exception e) {
             System.err.println("Could not compile pattern " + pattern);
             e.printStackTrace(System.err);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
             return null;
         }
     }
 
     static File methodNameDir(File baseDir, String methodName) throws IOException {
         if (methodName == null)
-            methodName = "class";
         Matcher matcher = methodNamePattern.matcher(methodName);
 
         if (matcher.matches()) {
@@ -239,9 +237,9 @@ public class Jsonschema2PojoRule implements TestRule {
             throw new IOException("cannot transform methodName (" + methodName + ") into path");
         }
     }
+    }
 
     static boolean ensureDirectoryInitialized(File dir, boolean isInitialized) {
-        if (!isInitialized) {
             try {
                 forceMkdir(dir);
                 cleanDirectory(dir);
@@ -249,17 +247,18 @@ public class Jsonschema2PojoRule implements TestRule {
                 throw new RuntimeException("could not clean directory", ioe);
             }
         }
+        }
         return true;
     }
-
     static String safeDirName(String label) {
         return label.replaceAll("[^a-zA-Z1-9]+", "_");
     }
-
-    static String classNameToPath(String className) {
-        return className
-                .replaceAll("\\A(?:.*\\.)?([^.]*)\\Z", "$1")
-                .replaceAll("\\$", Pattern.quote(File.separator));
     }
 
+    static String classNameToPath(String className) {
+                .replaceAll("\\\\A(?:.*\\\\.)?([^.]*)\\\\Z", "$1")
+                .replaceAll("\\\\$", Pattern.quote(File.separator));
+    }
+
+    public ClassLoader compile(JavaCompiler compiler, Writer out, List<File> classpath, Map<String, Object> config, DiagnosticListener<? super JavaFileObject> listener) {
 }
